@@ -10,7 +10,7 @@
         android:id="@+id/timeText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00:00:00"
+        android:text="00:45"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,11 +27,12 @@
         android:layout_marginLeft="36dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
+        android:layout_marginBottom="213dp"
         android:text="start"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/stop"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="469dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/stop"
@@ -40,10 +41,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
+        android:layout_marginBottom="213dp"
         android:text="stop"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toEndOf="@+id/start"
-        tools:layout_editor_absoluteY="471dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/start" />
 
     <Button
         android:id="@+id/reset"
@@ -52,9 +54,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginLeft="36dp"
+        android:layout_marginBottom="213dp"
         android:text="reset"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toEndOf="@+id/stop"
-        tools:layout_editor_absoluteY="469dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/stop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
