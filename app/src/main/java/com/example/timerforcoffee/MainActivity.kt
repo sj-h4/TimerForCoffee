@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     val handler = Handler()
     var timeValue = 45
+    var cntValue = 0
 
     val runnable = object : Runnable {
         override fun run() {
@@ -15,6 +16,7 @@ class MainActivity : AppCompatActivity() {
             timeToText(timeValue)?.let {
                 timeText.text = it
             }
+            countText.text = cntValue.toString()
             if (timeValue > 0) handler.postDelayed(this, 1000)
             else startAndReset()
         }
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         start.setOnClickListener {
             if (cnt == 0) {
                 cnt = 1
+                cntValue += 1
                 handler.post(runnable)
             }
         }
@@ -56,6 +59,8 @@ class MainActivity : AppCompatActivity() {
         //reetボタンの処理
         reset.setOnClickListener {
             resetTimer()
+            cntValue = 0
+            countText.text = cntValue.toString()
         }
     }
 
