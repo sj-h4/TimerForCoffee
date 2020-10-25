@@ -1,2 +1,2 @@
 # TimerForCoffee
-This is a timer for pouring over coffee.
+コーヒーを淹れるためだけのタイマーです。1回の抽出時間を45秒に設定しています。
