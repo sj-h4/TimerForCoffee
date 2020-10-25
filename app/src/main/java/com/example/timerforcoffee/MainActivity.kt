@@ -23,20 +23,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // 実行中のときcntは1、それ以外では0
+        var cnt = 0
         //startボタンの処理
         start.setOnClickListener {
-            handler.post(runnable)
+            if (cnt == 0) {
+                cnt = 1
+                handler.post(runnable)
+            }
         }
 
-        //stopボタンの処理
-        stop.setOnClickListener {
-            handler.removeCallbacks(runnable)
-        }
 
         //reetボタンの処理
         reset.setOnClickListener {
             handler.removeCallbacks(runnable)
             timeValue = 45
+            cnt = 0
             timeToText()?.let {
                 timeText.text = it
             }
