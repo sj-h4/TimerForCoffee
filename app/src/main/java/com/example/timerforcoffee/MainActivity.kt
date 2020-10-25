@@ -9,22 +9,41 @@ class MainActivity : AppCompatActivity() {
     val handler = Handler()
     var timeValue = 45
 
+    val runnable = object : Runnable {
+        override fun run() {
+            timeValue--
+            timeToText(timeValue)?.let {
+                timeText.text = it
+            }
+            if (timeValue > 0) handler.postDelayed(this, 1000)
+            else startAndReset()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val runnable = object : Runnable {
-            override fun run() {
-                timeValue--
-                timeToText(timeValue)?.let {
-                    timeText.text = it
-                }
-                if (timeValue > 0) handler.postDelayed(this, 1000)
+        startAndReset()
+    }
+
+    fun startAndReset(){
+        // 実行中のときcntは1、それ以外では0
+        var cnt = 0
+
+        fun resetTimer() {
+            handler.removeCallbacks(runnable)
+            timeValue = 45
+            cnt = 0
+            timeToText()?.let {
+                timeText.text = it
             }
         }
 
-        // 実行中のときcntは1、それ以外では0
-        var cnt = 0
+        if (timeValue == 0) {
+            resetTimer()
+        }
+
         //startボタンの処理
         start.setOnClickListener {
             if (cnt == 0) {
@@ -36,21 +55,15 @@ class MainActivity : AppCompatActivity() {
 
         //reetボタンの処理
         reset.setOnClickListener {
-            handler.removeCallbacks(runnable)
-            timeValue = 45
-            cnt = 0
-            timeToText()?.let {
-                timeText.text = it
-            }
+            resetTimer()
         }
     }
+
+
 
     private fun timeToText(time:Int=45): String? {
         return if (time < 0) {
             null
-        }
-        else if (time == 0) {
-            "00:45"
         }
         else {
             val m = time % 3600 / 60
