@@ -7,17 +7,20 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
     val handler = Handler()
-    var timeValue = 45
+    var timeValue = 0
     var cntValue = 0
+    val limitTime = 45
 
     val runnable = object : Runnable {
         override fun run() {
-            timeValue--
+            timeValue++
+
             timeToText(timeValue)?.let {
                 timeText.text = it
             }
             countText.text = cntValue.toString()
-            if (timeValue > 0) handler.postDelayed(this, 1000)
+
+            if (timeValue < limitTime) handler.postDelayed(this, 1000)
             else startAndReset()
         }
     }
@@ -35,14 +38,14 @@ class MainActivity : AppCompatActivity() {
 
         fun resetTimer() {
             handler.removeCallbacks(runnable)
-            timeValue = 45
+            timeValue = 0
             cnt = 0
             timeToText()?.let {
                 timeText.text = it
             }
         }
 
-        if (timeValue == 0) {
+        if (timeValue == limitTime) {
             resetTimer()
         }
 
@@ -66,7 +69,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    private fun timeToText(time:Int=45): String? {
+    private fun timeToText(time:Int=0): String? {
         return if (time < 0) {
             null
         }
