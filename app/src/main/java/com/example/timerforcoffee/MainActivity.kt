@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
             timeToText(timeValue)?.let {
                 timeText.text = it
             }
-            countText.text = cntValue.toString()
+            countText.text = "%d湯目".format(cntValue)
 
             if (timeValue < limitTime) handler.postDelayed(this, 1000)
             else startAndReset()
