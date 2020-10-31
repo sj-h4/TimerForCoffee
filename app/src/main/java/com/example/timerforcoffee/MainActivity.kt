@@ -14,13 +14,17 @@ class MainActivity : AppCompatActivity() {
     val runnable = object : Runnable {
         override fun run() {
             timeValue++
+            if (timeValue == limitTime + 1) {
+                cntValue++
+                timeValue = 0
+            }
 
             timeToText(timeValue)?.let {
                 timeText.text = it
             }
             countText.text = "%d湯目".format(cntValue)
 
-            if (timeValue < limitTime) handler.postDelayed(this, 1000)
+            if (cntValue <= 5) handler.postDelayed(this, 1000)
             else startAndReset()
         }
     }
@@ -45,10 +49,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (timeValue == limitTime) {
-            resetTimer()
-        }
-
         //startボタンの処理
         start.setOnClickListener {
             if (cnt == 0) {
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         reset.setOnClickListener {
             resetTimer()
             cntValue = 0
-            countText.text = cntValue.toString()
+            countText.text = "%d湯目".format(cntValue)
         }
     }
 
