@@ -1,7 +1,11 @@
 package com.example.timerforcoffee
 
+import android.media.AudioAttributes
+import android.media.SoundPool
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -10,6 +14,8 @@ class MainActivity : AppCompatActivity() {
     var timeValue = 0
     var cntValue = 0
     val limitTime = 45
+    private lateinit var soundPool: SoundPool
+    var sound = 0
 
     val runnable = object : Runnable {
         override fun run() {
@@ -17,6 +23,8 @@ class MainActivity : AppCompatActivity() {
             if (timeValue == limitTime + 1) {
                 cntValue++
                 timeValue = 0
+                soundPool.play(sound, 1.0f, 1.0f, 0, 0, 1.0f)
+
             }
 
             timeToText(timeValue)?.let {
@@ -29,9 +37,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val audioAttributes: AudioAttributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+            .build()
+        soundPool = SoundPool.Builder()
+            .setAudioAttributes(audioAttributes)
+            .setMaxStreams(1).build()
+
+        sound = soundPool.load(this, R.raw.cursor1, 1)
 
         startAndReset()
     }
@@ -80,3 +99,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
